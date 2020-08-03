@@ -31,7 +31,7 @@
     <div class="xar-accent-outline xar-cm-comment">
         <a name="#$loop:item['xar_cid']#"></a>
         <xar:template file="action_buttons" />
-        <div class="xar-float-left xar-align-top" style="width:800px">
+        <div class="xar-float-left xar-align-top">
             <p class="xar-floatleft">
                 <xar:comment>Get comment number if we are using comments in articles module (id 151)
                   - we don't necessarily want comment number added in other circumstances. Adjust as necessary.
