@@ -1,0 +1,96 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<div class="xar-mod-page">
+    <div class="xar-mod-head">
+        <xar:if condition="!xarRequestIsAJAX()">
+            <xar:template type="module" module="base" file="admin-menu" />
+        </xar:if>
+    </div>
+    <div class="xar-mod-body">
+        <h1> <xar:mlstring>Comments module statistics</xar:mlstring></h1>
+        <div class="xar-mod-content">
+
+            <div class="xar-align-center">
+                <table class="xar-items">
+                    <tr>
+                        <th>
+                            <xar:mlstring>Module<br />Name</xar:mlstring>
+                        </th>
+                        <th>
+                            <xar:mlstring>Module<br />Items</xar:mlstring>
+                        </th>
+                        <th>
+                            <xar:mlstring>Total<br />Comments</xar:mlstring>
+                        </th>
+                        <th>
+                            <xar:mlstring>Inactive<br />Comments</xar:mlstring>
+                        </th>
+                        <th>
+                            <xar:mlstring>Action</xar:mlstring>
+                        </th>
+                    </tr>
+
+                    <xar:if condition="!isset($data) or empty($data) or count($data) eq '0'">
+                        <tr>
+                            <td colspan="5" align="center">
+                                <p>
+                                <xar:mlstring>
+                                    There are currently no comments in the database.
+                                </xar:mlstring>
+                                </p>
+                            </td>
+                        </tr>
+                    <xar:else />
+
+                        <xar:loop name="$data">
+                            <tr>
+                                <td class="xar-valign-middle" width="40%">
+                                    <a href="#$loop:item['module_url']#">#$loop:item['modname']#</a>
+                                </td>
+                                <td class="xar-valign-middle xar-align-center" width="15%">
+                                    #$loop:item['pages']#
+                                </td>
+                                <td class="xar-valign-middle xar-align-center" width="15%">
+                                    #$loop:item['total']#
+                                </td>
+                                <td class="xar-valign-middle xar-align-center" width="15%">
+                                    #$loop:item['inactive']#
+                                </td>
+                                <td class="xar-valign-middle xar-align-center" width="15%">
+                                    <a href="#$loop:item['delete_url']#"><b>Delete</b></a>
+                                </td>
+                            </tr>
+
+                        </xar:loop>
+                        <tr>
+                            <td class="xar-valign-middle" width="40%">
+                                <b><xar:mlstring>Grand Total</xar:mlstring></b>
+                            </td>
+                            <td class="xar-valign-middle xar-align-center" valign="center" width="15%">
+                                <b>#$gt_pages#</b>
+                            </td>
+                            <td class="xar-valign-middle xar-align-center" width="15%">
+                                <b>#$gt_total#</b>
+                            </td>
+                            <td class="xar-valign-middle xar-align-center" width="15%">
+                                <b>#$gt_inactive#</b>
+                            </td>
+                            <td class="xar-valign-middle xar-align-center" width="15%">
+                                <a href="#$delete_all_url#">Delete All</a>
+                            </td>
+                        </tr>
+
+                    </xar:if>
+                   </table>
+                    <p class="xar-form-input-wrapper">
+                        <xar:mlstring>
+                            By clicking on <strong>Delete</strong> you can delete all comments associated with a particular
+                            module. Clicking on a module will take you to that module's statistics page containing
+                            the figures for each of that module's items that have comments associated with them.
+                            From there you can delete all comments associated with a particular item.
+                        </xar:mlstring>
+                   </p>
+            </div>
+        </div>
+    </div>
+</div>
+

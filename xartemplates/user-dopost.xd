@@ -1,0 +1,2 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<xar:template file="includes/input-box.xd" type="system" />

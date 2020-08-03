@@ -1,0 +1,232 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+
+<div class="xar-mod-body">
+
+    <xar:if condition="xarModGetVar('comments','usersetrendering') == '1'">
+     <h3>
+            <xar:mlstring>Comments User Configuration</xar:mlstring>
+    </h3>
+    <form action="#xarModURL('comments','user','usermenu')#" method="post" enctype="application/x-www-form-urlencoded">
+
+    <fieldset>
+        <legend>
+            <xar:mlstring>
+                Comment Options
+            </xar:mlstring>
+        </legend>
+            <div class="xar-form-input-wrapper">
+                <label for="settings[depth]" class="xar-form-label" title="#xarML('Default rendering depth')#">
+                        <xar:mlstring>
+                        Default rendering depth
+                        </xar:mlstring>
+                </label>
+                <select name="settings[depth]" id="settings-depth">
+                    <xar:for start="$i = 1" test="$i le $settings['max_depth']" iter="$i++">
+                        <xar:if condition="$i eq $settings['depth']">
+                            <option value="#$i#" selected="selected">
+                                    #$i#
+                            </option>
+                        <xar:else />
+                            <option value="#$i#">
+                                    #$i#
+                            </option>
+                        </xar:if>
+                    </xar:for>
+                </select>
+            </div>
+            <div class="xar-form-input-wrapper">
+                <label for="settings[render]" class="xar-form-label" title="#xarML('Default Rendering Style')#">
+                    <xar:mlstring>
+                            Default Rendering Style
+                    </xar:mlstring>
+                </label>
+                    <select name="settings[render]" id="settings-render">
+                        <xar:if condition="$settings['render'] eq 'nested'">
+                            <option value="nested" selected="selected">
+                                <xar:mlstring>
+                                    Nested
+                                </xar:mlstring>
+                            </option>
+                        <xar:else />
+                            <option value="nested">
+                                <xar:mlstring>
+                                        Nested
+                                </xar:mlstring>
+                            </option>
+                        </xar:if>
+                        <xar:if condition="$settings['render'] eq 'flat'">
+                            <option value="flat" selected="selected">
+                                <xar:mlstring>
+                                    Flat
+                                </xar:mlstring>
+                            </option>
+                        <xar:else />
+                                <option value="flat">
+                                        <xar:mlstring>
+                                            Flat
+                                        </xar:mlstring>
+                                    </option>
+                        </xar:if>
+                        <xar:if condition="$settings['render'] eq 'threaded'">
+                                    <option value="threaded" selected="selected">
+                                        <xar:mlstring>
+                                            Threaded
+                                        </xar:mlstring>
+                                    </option>
+                                    <xar:else />
+                                    <option value="threaded">
+                                        <xar:mlstring>
+                                            Threaded
+                                        </xar:mlstring>
+                                    </option>
+                        </xar:if>
+                        <xar:if condition="$settings['render'] eq 'nocomments'">
+                                    <option value="nocomments" selected="selected">
+                                        <xar:mlstring>
+                                            No Comments
+                                        </xar:mlstring>
+                                    </option>
+                                    <xar:else />
+                                    <option value="nocomments">
+                                        <xar:mlstring>
+                                            No Comments
+                                        </xar:mlstring>
+                                    </option>
+                        </xar:if>
+                    </select>
+                </div>
+                <div class="xar-form-input-wrapper">
+                    <label for="settings[sortby]" class="xar-form-label" title="#xarML('Default Sorting Mode')#">
+                        <xar:mlstring>
+                                Default Sorting Mode
+                        </xar:mlstring>
+                    </label>
+                    <select name="settings[sortby]" id="settings-sortby">
+                            <xar:if condition="$settings['sortby'] eq 1">
+                                <option value="1" selected="selected">
+                                    <xar:mlstring>
+                                        Author
+                                    </xar:mlstring>
+                                </option>
+                            <xar:else />
+                                <option value="1">
+                                    <xar:mlstring>
+                                        Author
+                                    </xar:mlstring>
+                                </option>
+                            </xar:if>
+                            <xar:if condition="$settings['sortby'] eq 2">
+                                <option value="2" selected="selected">
+                                    <xar:mlstring>
+                                        Date
+                                    </xar:mlstring>
+                                </option>
+                            <xar:else />
+                                <option value="2">
+                                    <xar:mlstring>
+                                        Date
+                                    </xar:mlstring>
+                                </option>
+                            </xar:if>
+                            <xar:if condition="$settings['sortby'] eq 3">
+                                <option value="3" selected="selected">
+                                    <xar:mlstring>
+                                        Thread
+                                    </xar:mlstring>
+                                </option>
+                                <xar:else />
+                                <option value="3">
+                                    <xar:mlstring>
+                                        Thread
+                                    </xar:mlstring>
+                                </option>
+                            </xar:if>
+                            <xar:if condition="$settings['sortby'] eq 4">
+                                <option value="4" selected="selected">
+                                    <xar:mlstring>
+                                        Title
+                                    </xar:mlstring>
+                                </option>
+                                <xar:else />
+                                <option value="4">
+                                    <xar:mlstring>
+                                        Title
+                                    </xar:mlstring>
+                                </option>
+                            </xar:if>
+                    </select>
+                </div>
+                <div class="xar-form-input-wrapper">
+                    <label for="settings[order]" class="xar-form-label" title="#xarML('Default Sorting Mode')#">
+                            <xar:mlstring>
+                                Default Sorting Order
+                            </xar:mlstring>
+                    </label>
+                    <select name="settings[order]" id="settings-order">
+                            <xar:if condition="$settings['order'] eq 1">
+                                <option value="1" selected="selected">
+                                    <xar:mlstring>
+                                        Ascending
+                                    </xar:mlstring>
+                                </option>
+                                <xar:else />
+                                <option value="1">
+                                    <xar:mlstring>
+                                        Ascending
+                                    </xar:mlstring>
+                                </option>
+                            </xar:if>
+                            <xar:if condition="$settings['order'] eq 2">
+                                <option value="2" selected="selected">
+                                    <xar:mlstring>
+                                        Descending
+                                    </xar:mlstring>
+                                </option>
+                                <xar:else />
+                                <option value="2">
+                                    <xar:mlstring>
+                                        Descending
+                                    </xar:mlstring>
+                                </option>
+                        </xar:if>
+                    </select>
+                </div>
+        </fieldset>
+            <div class="xar-form-input-wrapper">
+            <input type="hidden" name="authid" id="authid" value="#$authid#" />
+            <input type="hidden" name="phase" id="phase" value="update" />
+            <input type="submit" value="#xarML('Update Configuration')#" align="middle" tabindex="3" />
+        </div>
+    </form>
+    </xar:if>
+    
+    
+    <xar:if condition="xarModGetVar('comments','usecommentnotify')">
+        <div class="xar-norm-outline xar-standard-box-padding xar-clearleft">
+            <h3>
+               <xar:mlstring>My comment notifications</xar:mlstring>
+            </h3>
+            <xar:if condition="!empty($notifylist)">
+                <ul>
+                    <xar:foreach in="$notifylist" key="$k" value="$link">
+    
+                       <xar:if condition="$link['notifytype'] eq 1">
+                           <li>
+                                <xar:mlstring>New in thread </xar:mlstring><a href="#xarModURL('comments','user','display',array('objectid'=>$link['object_id'],'modid'=>$link['module_id'],'itemtype'=>$link['itemtype']))#">#$link['title']#</a>
+                                &#160;
+                                <span style="font-size:smaller">[<a href="#$link['remove']#">&#160;<xar:mlstring>Remove</xar:mlstring></a>]<span>
+                          </li>
+                       <xar:else />
+                           <li style="list-style-type:none;margin-left:2em;"><xar:mlstring>Reply to </xar:mlstring>
+                               <a href="#xarModURL('comments','user','display',array('selected_cid'=>$link['parent_id'],'objectid'=>$link['object_id'],'modid'=>$link['module_id'],'itemtype'=>$link['itemtype']))#">#$link['title']#</a>
+                               &#160;<span style="font-size:smaller">[<a href="#$link['remove']#"><xar:mlstring>Remove</xar:mlstring></a>]</span>
+                           </li>
+                       </xar:if>
+                   </xar:foreach>
+               </ul>
+            <xar:else />
+               <p><xar:mlstring>You are not currently receiving any notifications for threads or replies.</xar:mlstring></p>
+            </xar:if>
+    </xar:if>
+    </div>
+</div>

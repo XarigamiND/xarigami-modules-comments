@@ -1,0 +1,19 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+
+<xar:base-include-javascript module="base" filename="formcheck.js" position="head" />
+<script type="text/javascript">
+<!--
+    var fieldRequired = Array("package[title]", "package[text]");
+    var fieldDescription = Array("Subject", "Comment");
+//-->
+</script>
+
+<xar:style module="comments" file="comments" scope="module" />
+<xar:sec mask="Comments-Reply" catch="false" >
+    <xar:template file="view-flat" type="module" />
+    <xar:template file="input-box" type="module" />
+    <xar:if condition="!empty($header['objectlink']) and !empty($header['objecttitle'])">
+        <p><xar:mlstring>Return to</xar:mlstring> <a href="#$header['objectlink']#">#$header['objecttitle']#</a></p>
+    </xar:if>
+    
+</xar:sec>

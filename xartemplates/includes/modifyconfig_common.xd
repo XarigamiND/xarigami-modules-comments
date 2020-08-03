@@ -1,0 +1,183 @@
+<div class="xar-form-input-wrapper">
+    <label for="depth" class="xar-form-label" title="#xarML('The rendering depth to be used as default')#">
+        <xar:mlstring>Default Rendering Depth</xar:mlstring>
+    </label>
+    <xar:set name="max_depth">_COM_MAX_DEPTH - 1</xar:set>
+
+    <select name="depth" id="depth">
+        <xar:for start="$i = 1" test="$i le $max_depth" iter="$i++">
+            <xar:if condition="$i eq $depth">
+                <option value="#$i#" selected="selected">#$i#</option>
+            <xar:else />
+                <option value="#$i#">#$i#</option>
+            </xar:if>
+        </xar:for>
+    </select>
+</div>
+<div class="xar-form-input-wrapper">
+    <label for="render" class="xar-form-label" title="#xarML('The rendering style to be used as default.')#">
+        <xar:mlstring>Default Rendering Style</xar:mlstring>
+    </label>
+  <xar:set name="renderoptions">
+                        array(
+                            array('id' => 'nested', 'name' => xarML('Nested')),
+                            array('id' => 'flat', 'name' => xarML('Flat')),
+                            array('id' => 'threaded', 'name' => xarML('Threaded')),
+                            array('id' => 'nocomments', 'name' => xarML('No Comments')),
+                        )
+    </xar:set>
+    <xar:data-input type="dropdown" name="render" id="render" value="$render" options="$renderoptions" />
+</div>
+<div class="xar-form-input-wrapper">
+    <label for="sortby" class="xar-form-label" title="#xarML('The sorting mode to be used as default.')#">
+        <xar:mlstring>Default Sorting Mode</xar:mlstring>
+    </label>
+    <xar:set name="sortbyoptions">
+                        array(
+                            array('id' => '1', 'name' => xarML('Author')),
+                            array('id' => '2', 'name' => xarML('Date')),
+                            array('id' => '3', 'name' => xarML('Thread')),
+                            array('id' => '4', 'name' => xarML('Title')),
+                        )
+    </xar:set>
+    <xar:data-input type="dropdown" name="sortby" id="sortby" value="$sortby" options="$sortbyoptions" />
+</div>
+<div class="xar-form-input-wrapper">
+    <label for="order" class="xar-form-label" title="#xarML('The sorting order to be used as default.')#">
+       <xar:mlstring>Default Sorting Order</xar:mlstring>
+    </label>
+    <xar:set name="sortoptions">
+                        array(
+                            array('id' => '1', 'name' => xarML('Ascending')),
+                            array('id' => '2', 'name' => xarML('Descending'))
+                        )
+    </xar:set>
+    <xar:data-input type="dropdown" name="order" id="order" value="$order" options="$sortoptions" />
+ </div>
+<div class="xar-form-input-wrapper-after">
+    <xar:data-input type="checkbox" name="quickpost" id="quickpost" checked="$quickpost" />
+    <label for="quickpost" title="#xarML('Use click-to-post input form for comments?')#">
+        <xar:mlstring>Use click-to-post comments?</xar:mlstring>
+    </label>
+</div>
+<div class="xar-form-input-wrapper">
+    <label for="editstamp" class="xar-form-label" title="#xarML('Default value for Comment Edit Stamp use')#">
+        <xar:mlstring>Use Comment Edit Stamp</xar:mlstring>
+    </label>
+    <xar:set name="stampoptions">
+                        array(
+                            array('id' => '0', 'name' => xarML('None')),
+                            array('id' => '1', 'name' => xarML('Yes')),
+                            array('id' => '2', 'name' => xarML('Yes - exclude for Admin'))
+                        )
+    </xar:set>
+    <xar:data-input type="dropdown" name="editstamp" id="editstamp" size="1" value="$editstamp" options="$stampoptions" />
+</div>
+<div class="xar-form-input-wrapper">
+    <label for="edittimelimit" class="xar-form-label" title="#xarML('Length of time users can edit their own comments')#">
+        <xar:mlstring>Edit time limit on a post</xar:mlstring>
+    </label>
+    <xar:data-input type="integerbox" name="edittimelimit" id="edittimelimit" class="xar-form-textshort" value="$edittimelimit" />
+    <span><xar:mlstring>(In minutes, leave at 0 for unlimited time)</xar:mlstring></span>
+</div>
+<div class="xar-form-input-wrapper-after">
+    <xar:data-input type="checkbox" name="manuallock" id="manuallock" checked="$manuallock" />
+    <label for="manuallock" title="#xarML('Allow manual thread locking')#">
+        <xar:mlstring>Allow manual locking of a thread?</xar:mlstring>
+    </label>
+</div>
+<div class="xar-form-input-wrapper-after">
+    <xar:data-input type="checkbox" name="threadlock" id="threadlock" checked="$threadlock" />
+    <label for="threadlock" title="#xarML('Allow auto thread locking')#">
+        <xar:mlstring>Allow automatic time locking of a thread?</xar:mlstring>
+    </label>
+</div>
+<div class="xar-form-input-wrapper">
+    <label for="threadlocktime" class="xar-form-label" title="#xarML('Length of time from item creation before thread lock')#">
+        <xar:mlstring>Auto time lock</xar:mlstring>
+    </label>
+    <xar:data-input type="floatbox" name="threadlocktime" id="threadlocktime" class="xar-form-textshort" value="$threadlocktime" />
+    <span><xar:mlstring>(Time in Days from creation of commented item)</xar:mlstring></span>
+</div>
+<div class="xar-form-input-wrapper">
+    <label for="itemtimefield" class="xar-form-label" title="#xarML('Name of time field of itemtype - date time stamp')#">
+        <xar:mlstring>Itemtype timestamp field name</xar:mlstring>
+    </label>
+    <xar:data-input type="textbox" name="itemtimefield" id="itemtimefield" class="xar-form-textxlong" value="$itemtimefield" />
+    <span><xar:mlstring>(Used for auto time lock)</xar:mlstring></span>
+    <p class="xar-form-input-wrapper-after"><xar:mlstring>A comma separated list can be used if you do NOT use hook overrides for settings.</xar:mlstring></p>
+</div>
+
+<div class="xar-form-input-wrapper-after">
+    <xar:data-input type="checkbox" name="AllowPostAsAnon" id="AllowPostAsAnon" checked="$AllowPostAsAnon" />
+    <label for="AllowPostAsAnon" title="#xarML('Admin will see the name of who posted.')#">
+        <xar:mlstring>Allow users to post using the name 'Anonymous' instead of their username?</xar:mlstring>
+    </label>
+</div>
+<div class="xar-form-input-wrapper-after">
+    <xar:data-input type="checkbox" name="wrap" id="wrap" checked="$wrap" />
+    <label for="wrap" title="#xarML('Long strings will be wrapped, including URLS when checked')#">
+        <xar:mlstring>Wrap Long Entries</xar:mlstring>
+    </label>
+</div>
+<div class="xar-form-input-wrapper-after">
+    <xar:data-input type="checkbox" name="showoptions" id="showoptions" checked="$showoptions" />
+    <label for="showoptions" title="#xarML('Show rendering options for comments')#">
+        <xar:mlstring>Show Options Bar in comment display</xar:mlstring>
+    </label>
+</div>
+<div class="xar-form-input-wrapper-after">
+    <xar:data-input type="checkbox" name="mustlogin" id="mustlogin" checked="$mustlogin" />
+    <label for="mustlogin" title="#xarML('Users must log in to post?')#">
+        <xar:mlstring>Login required to post comments?</xar:mlstring>
+    </label>
+    <span class="xar-sub">[<xar:mlstring>This will NOT affect posting ability
+     - posting is privileges controlled. Used for some message options.</xar:mlstring>]</span>
+</div>
+<div class="xar-form-input-wrapper-after">
+        <xar:data-input type="checkbox" name="usecommentnotify" id="usecommentnotify" checked="$usecommentnotify" />
+        <label for="usecommentnotify" title="#xarML('Allow users to request notification of new comments?')#">
+            <xar:mlstring>Allow users to request notification of new comments?</xar:mlstring>
+        </label>
+</div>
+<div class="xar-form-input-wrapper">
+    <label class="xar-form-label" title="#xarML('Moderation options')#">
+        <xar:mlstring>Comment is not displayed until</xar:mlstring>
+    </label>
+    <xar:data-input type="checkbox" name="approvalrequired" id="approvalrequired" checked="$approvalrequired" />
+    <label for="approvalrequried" title="#xarML('Approval is required before a comment is dislayed?')#">
+        <xar:mlstring>approved by a moderator?</xar:mlstring>
+    </label>
+</div>
+<div class="xar-form-input-wrapper-after">
+    <xar:data-input type="checkbox" name="approvalifprevious" id="approvalifprevious" checked="$approvalifprevious" />
+    <label for="approvalifprevious" title="#xarML('At least one prior approved comment?')#">
+        <xar:mlstring>the author has at least one prior approved comment?</xar:mlstring>
+    </label>
+</div>
+<div class="xar-form-input-wrapper-after">
+    <xar:data-input type="checkbox" name="approvalifinfo" id="approvalifinfo" checked="$approvalifinfo" />
+    <label for="approvalifinfo" title="#xarML('If anonymous user they must supply name and email?')#">
+        <xar:mlstring>if the poster is Anonymous (not logged in) they must supply name and email, and optionally website?</xar:mlstring>
+    </label>
+</div>
+<div class="xar-form-input-wrapper-after">
+    <xar:data-input type="checkbox" name="holdallanon" id="holdallanon" checked="$holdallanon" />
+    <label for="holdallanon" title="#xarML('Hold all anonymous posts from non-logged in users for moderation?')#">
+        <xar:mlstring>Hold all Anonymous (not logged in) posts for moderation?</xar:mlstring>
+    </label>
+</div>
+<div class="xar-form-input-wrapper">
+    <xar:set name="avataroptions">
+                        array(
+                            array('id' => '0', 'name' => xarML('No avatars')),
+                            array('id' => '1', 'name' => xarML('Use avatars')),
+                        )
+    </xar:set>
+    <label for="useavatars" class="xar-form-label" title="#xarML('Use avatars in posts?')#">
+        <xar:mlstring>
+            Use avatars in posts?
+        </xar:mlstring>
+    </label>
+    <xar:data-input type="dropdown" name="useavatars" id="useavatars" value="$useavatars" options="$avataroptions" /> [Role avatars must be installed]
+</div>

@@ -1,0 +1,20 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<fieldset class="formelements xar-norm">
+    <legend>
+        <xar:mlstring>
+            Comments
+        </xar:mlstring>
+    </legend>
+    <!-- @todo allow this to be per itemtype instead of globally -->
+    <xar:if condition="xarModGetVar('comments','allowhookoverride')"> 
+        <xar:template file="modifyconfig_common" />
+   <xar:else />
+       <xar:set name="hookoverride">'<a href="'.xarModURL('comments','admin','modifyconfig').'">'.xarML('Comments Modify Config').'</a>'</xar:set>
+       <p><xar:mlstring>Comments are active for this module/itemtype and use default settings.</xar:mlstring><br />
+            <xar:ml>
+                <xar:mlstring>You can custom hooks for this module/itemtype by activating hook overrides in #(1)</xar:mlstring>
+                <xar:mlvar>#$hookoverride#</xar:mlvar>
+           </xar:ml>
+        </p>
+   </xar:if>
+</fieldset>

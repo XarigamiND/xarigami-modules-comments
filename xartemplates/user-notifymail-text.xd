@@ -1,0 +1,30 @@
+#$subject#
+
+
+#$message#
+
+
+You can view this comment at: #$commenturl#
+
+
+<xar:if condition="!empty($threadurl)">
+You can view the whole thread at: #$threadurl#
+</xar:if>
+
+-------------------------------------------------------------
+
+You are receiving this email as you have requested to receive notification
+of either new comments or replies to comments.
+
+The email was sent to the email registered in your user account.
+
+To opt out of futher notifications on this thread,
+please visit the comment notified in this email and
+click on the 'Cancel' notification link.
+
+
+#$sitename# <xar:mlstring>at</xar:mlstring> #$siteurl#
+
+#$todaydate#
+
+

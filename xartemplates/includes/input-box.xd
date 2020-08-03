@@ -1,0 +1,127 @@
+<xar:comment> for this module specific css rules look at comments/xarstyles/comments.css file [andyv] </xar:comment>
+<xar:set name="request">xarRequestGetInfo()</xar:set>
+<xar:set name="activetab">#$request.2#</xar:set>
+<xar:if condition="xarSecurityCheck('CommentThreadPost',0,'Thread',$header['modid'].':'.$header['itemtype'].':'.$header['objectid'])">
+    <form action="#$receipt['post_url']#" method="post" name="post" id="post" onSubmit="return xar_base_formCheck(this, fieldRequired, fieldDescription);">
+        <div class="xar-ib-wrapper xar-accent-outline">
+            <xar:comment>We need to adjust class to displays with and without the right column for form hooks eg bbcode, smilies</xar:comment>
+            <xar:if condition="$hooks['formdisplay'] ne ''">
+                <xar:set name="actionpanel">'xar-ib-leftpanelshort'</xar:set>
+                <div class="xar-ib-actionpanel xar-accent">
+                    <span>#$hooks['formdisplay']#</span>
+                </div>
+            <xar:else />
+                <xar:set name="actionpanel">'xar-ib-leftpanel'</xar:set>
+            </xar:if>
+            <div class="#$actionpanel#">
+                <p>
+                    <xar:if condition="strtolower(xarUserGetVar('uname')) ne 'anonymous'">
+                        <xar:mlstring>Name: </xar:mlstring>
+                        <a href="&xar-modurl-roles-user-display;&amp;uid=#$package['uid']#"> #$package['name']# </a>
+                        <xar:if condition="$receipt['action'] ne 'modify' and xarUserIsLoggedIn()">
+                            [ <a class="xar-norm" href="&xar-modurl-authsystem-user-logout;">
+                            <xar:mlstring>Logout</xar:mlstring>
+                            </a> ]
+                        </xar:if>
+                        <xar:if condition="$package['settings']['AllowPostAsAnon']">
+                            <xar:if condition="isset($package['postanon']) and $package['postanon'] eq '1'">
+                                <input type="checkbox" name="package[postanon]" id="package-postanon" checked="checked" />
+                            <xar:else />
+                                <input type="checkbox" name="package[postanon]" id="package-postanon" />
+                            </xar:if>
+                            <xar:mlstring>Post anonymously</xar:mlstring>
+                            <br />
+                        </xar:if>
+                    <xar:elseif condition="xarUserGetVar('uid') eq $package['isanon']" />
+                        <p>
+                            <label for="package-aname"><xar:mlstring>Name:</xar:mlstring></label>
+                            <xar:data-input type="textbox" id="package-aname" name="package[aname]" value="$package['aname']" class="xar-text-medium"/>
+                            <xar:mlstring>(required)</xar:mlstring>
+                            <xar:if condition="isset($invalid['name'])">
+                                <br />
+                                <span class="xar-error">#$invalid['name']#</span>
+                            </xar:if>
+                        </p>
+                        <p>
+                            <label for="package-aemail"><xar:mlstring>Email:</xar:mlstring></label>
+                            <xar:data-input type="email" id="package-aemail" name="package[aemail]" value="$package['aemail']" class="xar-text-medium"/>
+                            <xar:mlstring>(required but not published)</xar:mlstring>
+                            <xar:if condition="isset($invalid['email'])">
+                                <br />
+                                <span class="xar-error">#$invalid['email']#</span>
+                            </xar:if>
+                        </p>
+                        <p>
+                            <label for="package-aweb"><xar:mlstring>Website:</xar:mlstring></label>
+                            <xar:data-input type="url" id="package-aweb" name="package[aweb]" value="$package['aweb']" class="xar-text-medium"/>
+                        </p>
+                    <xar:else />
+                        <xar:mlstring>Name: </xar:mlstring>
+                        #$package['name']#
+                    </xar:if>
+                </p>
+
+                <xar:comment>You may wish to comment out the Subject in some cases.
+                    Ensure you assign some valid content to it with a hidden field as it is required eg
+                    <xar:set name="thetitle">isset($package['new_title']) and !empty($package['new_title'])? $package['new_title']: $package['title']</xar:set>
+                    <input type="hidden" name="package[title]" id="package[title]" value="#$thetitle#"/>
+                 </xar:comment>
+
+                <label for="package-title"><xar:mlstring>Subject:</xar:mlstring></label>
+                <xar:if condition="isset($package['new_title']) and !empty($package['new_title'])">
+                    <input class="xar-ib-field" type="text" name="package[title]" id="package-title" value="#xarVarPrepForDisplay($package['new_title'])#" tabindex="1" />
+                <xar:elseif condition="!empty($package['title'])" />
+                    <input class="xar-ib-field" type="text" name="package[title]" id="package-title" value="#xarVarPrepForDisplay($package['title'])#" tabindex="1" />
+                <xar:else />
+                    <input class="xar-ib-field" type="text" name="package[title]" id="package-title" value="" tabindex="1" />
+                </xar:if>
+                <xar:if condition="isset($invalid['title'])">
+                    <br />
+                    <span class="xar-error">#$invalid['title']#</span>
+                </xar:if>
+                <label for="package-text"><xar:mlstring>Comment:</xar:mlstring></label>
+                <xar:if condition="isset($package['text'])">
+                    <textarea class="xar-ib-fieldtext" name="package[text]" id="package-text" tabindex="2">#xarVarPrepForDisplay($package['text'])#</textarea>
+                <xar:else />
+                    <textarea class="xar-ib-fieldtext" name="package[text]" id="package-text" tabindex="2"></textarea>
+                </xar:if>
+                <xar:if condition="isset($invalid['text'])">
+                    <br />
+                    <span class="xar-error">#$invalid['text']#</span>
+                </xar:if>
+                <xar:comment> TODO: show item new/modify hook here somehow
+                    <xar:if condition="!empty($hooks['iteminput'])">
+                        <xar:foreach in="$hooks['iteminput']" key="$hookmodule">
+                            #$hooks.iteminput.$hookmodule#
+                        </xar:foreach>
+                    </xar:if>
+                </xar:comment>
+                #$hooks['formnew']#
+                <xar:comment>Include formcaptcha code for now - until there is a completed hook</xar:comment>
+                <xar:template file="formcaptcha" module="comments" />
+
+                <input type="hidden" name="header[modid]" id="header-modid" value="#$header['modid']#" />
+                <input type="hidden" name="header[objectid]" id="header-objectid" value="#$header['objectid']#" />
+                <input type="hidden" name="header[itemtype]" id="header-itemtype" value="#$header['itemtype']#" />
+                <input type="hidden" name="authid" id="authid" value="#$package['authid']#" />
+                <xar:if condition="!isset($header['pid']) or empty($header['pid'])">
+                    <input type="hidden" name="header[pid]" id="header-pid" value="0" />
+                <xar:else />
+                    <input type="hidden" name="header[pid]" id="header-pid" value="#$header['pid']#" />
+                </xar:if>
+                <xar:if condition="isset($receipt['action']) and $receipt['action'] eq 'modify'">
+                    <input type="hidden" name="header[cid]" id="header-cid" value="#$header['cid']#" />
+                </xar:if>
+                <input type="hidden" name="receipt[returnurl][decoded]" id="receipt-returnurl-decoded" value="#$receipt['returnurl']['decoded']#" />
+                <input type="hidden" name="receipt[action]" id="receipt-action" />
+                <input type="hidden" name="header['quickpost']" id="header['quickpost']"/>
+                <input type="submit" id="receipt-action-preview" onclick="document.getElementById('receipt-action').value='preview'" value="#xarML('Preview')#" />
+                <input type="submit" id="receipt-action-submit" onclick="document.getElementById('receipt-action').value='submit'" value="#xarML('Submit')#" />
+
+                <xar:if condition="$package['settings']['usecommentnotify'] and xarUserIsLoggedIn()">
+                    &#160;<xar:data-input type="checkbox" id="notifyme1" name="notifyme" value="1" /> <xar:mlstring>Notify me of replies</xar:mlstring>
+                </xar:if>
+            </div>
+        </div>
+    </form>
+</xar:if>

@@ -1,0 +1,61 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<div class="xar-mod-page">
+    <div class="xar-mod-head">
+        <xar:if condition="!xarRequestIsAJAX()">
+            <xar:template type="module" module="base" file="admin-menu" />
+        </xar:if>
+    </div>
+    <div class="xar-mod-body">
+        <h1> <xar:mlstring>Manage notifications</xar:mlstring></h1>
+        <div class="xar-mod-content">
+            <p class="xar-padding-thick"><xar:mlstring>Manage thread and reply notifications from here to keep your notification
+                table clean and zippy. Regularly check and delete old notifications such as
+                those on threads that are locked from further comment.
+                </xar:mlstring>
+            </p>
+            <table class="xar-items">
+                <tr>
+                    <th><xar:mlstring>Notification Type</xar:mlstring></th>
+                    <th><xar:mlstring>Total Number</xar:mlstring></th>
+                    <th><xar:mlstring>Number on Locked Thread</xar:mlstring></th>
+                </tr>
+                <tr>
+                    <td>Thread notifications</td>
+                    <td>
+                        #$threadnotifies#
+                    </td>
+                    <td>
+
+                       <form method="post" action="#xarModURL('comments','admin','managenotifies')#">
+                            <input type="hidden" name="deletetype" value="thread" />
+                            <input type="hidden" name="authid" id="authid" value="#$authid#" />
+                            #$threadnotifieslocked#&#160;
+                            <xar:if condition="$threadnotifieslocked gt 0">
+                                <input class="xar-sub" type="submit" name="confirm" id="confirmthread" value="#xarML('Delete')#" />
+                            </xar:if>
+                        </form>
+                    </td>
+
+                </tr>
+              <tr>
+                    <td>Reply notifications</td>
+                    <td>
+                        #$replynotifies#
+                    </td>
+                    <td>
+                            <form method="post" action="#xarModURL('comments','admin','managenotifies')#">
+                                <input type="hidden" name="deletetype" value="reply" />
+                                <input type="hidden" name="authid" id="authid" value="#$authid#" />
+                                #$replynotifieslocked# &#160;
+                                <xar:if condition="$replynotifieslocked gt 0">
+                                   <input class="xar-sub" type="submit" name="confirm" id="confirmreply" value="#xarML('Delete')#" />
+                                </xar:if>
+                            </form>
+                    </td>
+                </tr>
+
+            </table>
+           <p>TODO: check for orphan notifies, delete by date, module itemtype, scheduler ...</p>
+        </div>
+    </div>
+</div>

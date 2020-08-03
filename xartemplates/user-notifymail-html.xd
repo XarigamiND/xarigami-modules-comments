@@ -1,0 +1,27 @@
+<p>#$subject#</p>
+
+<p>#$message#</p>
+
+<p>You can view this comment at: <a href ="#$commenturl#">#$commenturl#</a></p>
+
+<xar:if condition="!empty($threadurl)">
+    <p>You can view the thread at: <a href ="#$threadurl#">#$threadurl#</a></p>
+</xar:if>
+
+<hr />
+<p>You are receiving this email as you have requested to receive notification
+of either new comments or replies to comments.</p>
+
+<p>The email was sent to the email registered in your user account</p>
+
+<p>To opt out of futher notifications on this comment thread,
+please visit the comment notified in this email and
+click on the 'Cancel' notification link.</p>
+
+<p>
+    #$sitename# <xar:mlstring>at</xar:mlstring> #$siteurl#
+</p>
+<p>
+    #$todaydate#
+</p>
+

@@ -1,0 +1,111 @@
+<xar:set name="useavatars">$package['settings']['useavatars']</xar:set>
+<xar:set name="comment_count">1</xar:set>
+<xar:loop name="$package['comments']">
+<xar:if condition="isset($receipt['preview']) and $receipt['preview'] eq '1'">
+       <div class="comments-tablewrapper">
+            <table class="xar-fullwidth xar-accent-outline xar-cm-comment xar-padding-thick" >
+                <tr>
+                    <th>
+                        <xar:mlstring>Preview</xar:mlstring>
+                    </th>
+                </tr>
+                <tr>
+                    <td class="xar-accent">
+                                <xar:mlstring>Posted: </xar:mlstring>#xarLocaleFormatDate('%a, %d %B %Y %H:%M:%S %Z', time())#<br />
+                                #$loop:item['transformed-title']#
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="xar-norm">
+                         #$loop:item['transformed-text']#
+
+                    </td>
+                </tr>
+            </table>
+        </div>
+<xar:else />
+
+    <xar:set name="item">#$loop:item#</xar:set>
+    <xar:set name="posteruid">#$loop:item['xar_uid']#</xar:set>
+    <div class="xar-accent-outline xar-cm-comment">
+        <a name="#$loop:item['xar_cid']#"></a>
+        <xar:template file="action_buttons" />
+        <div class="xar-float-left xar-align-top" style="width:800px">
+            <p class="xar-floatleft">
+                <xar:comment>Get comment number if we are using comments in articles module (id 151)
+                  - we don't necessarily want comment number added in other circumstances. Adjust as necessary.
+                </xar:comment>
+                <xar:if condition="$useavatars eq 1">
+                    <xar:roles-avatar uid="$posteruid" size="50" />
+                </xar:if>
+            </p>
+            <p class="xar-floatleft">
+                <xar:if condition="isset($header['modid']) and  $header['modid'] eq 151 and $receipt['action'] ne 'reply'">
+                    <span class="comment_num">
+                        <a style="text-decoration:none;" href="#xarModURL('comments','user','display',array('cid' => $loop:item['xar_cid']))#" title="#xarML('Permalink to this comment')#" rel="bookmark">
+                        ###$comment_count++#
+                        </a>
+                    </span>
+                </xar:if>
+                <span style="font-size: larger;font-weight:bold;">
+                <xar:if condition="($loop:item['xar_postanon'] eq '0' and
+                    !($package['settings']['AllowPostAsAnon'] and ($loop:item['xar_postanon'] ne '0') and ($loop:item['xar_uid'] ne $package['isanon'])))">
+                    <xar:comment>Posting 'as' anonymous but is a logged in user</xar:comment>
+                    #$loop:item['xar_author']#
+                <xar:elseif condition="($loop:item['xar_uid'] eq $package['isanon']) AND isset($loop:item['anoninfo']) AND !empty($loop:item['anoninfo'])" />
+                    #$loop:item['anoninfo']['aname']#
+                <xar:else />
+                    <xar:sec catch="false" mask="Comments-Moderator">
+                        <xar:mlstring>Anonymous</xar:mlstring>
+                            (#$loop:item['xar_author']#)
+                    <xar:else />
+                        <xar:mlstring>Anonymous</xar:mlstring>
+                    </xar:sec>
+                </xar:if>
+                </span>
+                 <span style="color:#999" class="xar-sub">
+                <xar:mlstring> on </xar:mlstring>
+                #xarLocaleFormatDate("%B %d, %Y %I:%M %p",$loop:item['xar_date'])#
+                <xar:sec mask="Comments-Admin" catch="false">
+                    &#160; [ip: #$loop:item['xar_hostname']#]
+                </xar:sec>
+                    </span>
+                <xar:comment>
+                    Now the title - comment out if you do not want it .
+                </xar:comment>
+                <br />
+                 &#160;<xar:mlstring>re</xar:mlstring>&#160;
+                    <xar:if condition="isset($package['transformed-title'])">
+                        #$loop:item['transformed-title']#
+                    <xar:else />
+                        #$loop:item['xar_title']#
+                    </xar:if>
+            </p>
+            <!-- show changelog -->
+            <xar:sec mask="Comments-Moderator" catch="false">
+                <xar:if condition="xarModIsHooked('changelog','comments')">
+                    <span class="xar-floatright;">
+                        <a href="#xarModURL('changelog','admin','showlog',array('modid' => 14, 'itemid'=> $loop:item['xar_cid']))#" title="#xarML('View Changes')#">
+                            <xar:mlstring>View changes</xar:mlstring>
+                        </a>
+                    </span>
+                </xar:if>
+            </xar:sec>
+            <!-- end changelog -->
+            <div class="xar-accent xar-cm-comment xar-clearleft" style="padding-left:60px;">
+                 <xar:if condition="isset($loop:item['transformed-text'])">
+                    #$loop:item['transformed-text']#
+                <xar:else />
+                    #$loop:item['xar_text']#
+
+                    <xar:if condition="isset($loop:item['xar_branchout']) and $loop:item['xar_branchout'] eq 1">
+                        <a href="#$receipt['returnurl']['decoded']#&amp;header[modid]=#$header['modid']#&amp;header[itemtype]=#$header['itemtype']#&amp;header[objectid]=#$header['objectid']#&amp;header[branchout]=1&amp;header[cid]=#$loop:item['xar_cid']#&amp;receipt[returnurl][encoded]=#$receipt['returnurl']['encoded']#"> #$loop:item['nested_text']# </a>
+                        &nbsp;
+                    </xar:if>
+                </xar:if>
+            </div>
+        </div>
+    </div>
+</xar:if>
+</xar:loop>

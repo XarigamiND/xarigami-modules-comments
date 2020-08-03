@@ -1,0 +1,103 @@
+<xar:if condition="count($commentlist)">
+  <xar:foreach in="$commentlist" key="$daylabel" value="$commentsthisday">
+  
+    <xar:if condition="$adddaysep=='on'">
+      <xar:if condition="$daylabel">
+      <!-- DAY SEPARATOR --> 
+      <div class="xar-title">
+        #$daylabel# 
+      </div>
+      </xar:if>      
+    </xar:if>
+    <ul>         
+      <xar:foreach in ="$commentsthisday" value="$comment">
+
+        <li>
+          <xar:if condition="$addcomment eq 1">
+            <!-- COMMENT TITLE - subjectplain is a tag stripped version of xar_title -->  
+            <span class="xar-title">#$comment['xar_subjectplain']#
+            </span>
+            <xar:elseif condition="$addcomment ge 20" />
+            <span class="xar-title">
+              <xar:if condition="(!empty($comment['objurl']) AND $addcomment ge 21)">
+                <a href="#$comment['objurl']####$comment['xar_cid']#">
+                  #$comment['xar_subjectplain']#
+                </a>
+              <xar:else />
+                <a href="#xarModURL('comments','user','display',array('cid' => $comment['xar_cid']))#">
+                #$comment['xar_subjectplain']#</a>
+              </xar:if>
+            </span>
+          </xar:if>
+          <xar:if condition="!empty($comment['xar_title'])">
+            <xar:if condition="$addobject ge 20">  
+              <!-- OBJECT TITLE -->
+              <xar:mlstring>in</xar:mlstring> 
+              <span class="xar-title">
+                <xar:if condition="$addobject ge 21">
+                  <a href="#$comment['objurl']####$comment['xar_cid']#">
+                    #$comment['xar_subjectplain']#
+                  </a> 
+                <xar:else/>
+                  <a href="#$comment['objurl']#">
+                   #$comment['xar_subjectplain']#
+                  </a> 
+                </xar:if>
+              </span>
+            <xar:elseif condition="$addobject eq 1" /> 
+              <xar:mlstring>in</xar:mlstring> 
+              <span class="xar-title">#$comment['xar_subjectplain']#</span>
+            </xar:if>
+          </xar:if> 
+          <xar:if condition="$addmodule ge 1">
+            <!-- MODULE NAME--> 
+            <span class="xar-normal">
+              <br /><xar:mlstring>in</xar:mlstring> 
+              <xar:if condition="$addmodule ge 2">
+                <a href="#$comment['modview']#">
+                  #$comment['modname']#
+                </a>
+              <xar:else/>
+                #$comment['modname']#
+              </xar:if>
+            </span>
+          </xar:if> 
+          <span class="xar-normal">
+            <xar:if condition="$addauthor ge 1">              
+                <!-- AUTHOR NAME-->  
+                <xar:mlstring>by</xar:mlstring>
+               
+                <xar:if condition="($comment['xar_postanon'] eq '0' and 
+                    !($settings['AllowPostAsAnon'] and ($comment['xar_postanon'] ne '0') and ($comment['xar_uid'] ne $isanon)))"> 
+                    <xar:if condition="$addauthor ge 2"> 
+                        <a href="#xarModURL('users','user','view')#">
+                            #$comment['xar_author']#
+                        </a>
+                    <xar:else />
+                        #$comment['xar_author']#
+                    </xar:if>
+               <xar:elseif condition="($comment['xar_uid'] eq $isanon) AND isset($comment['anoninfo']) AND !empty($comment['anoninfo'])" />
+                         #$comment['anoninfo']['aname']#
+               <xar:else />
+                    <xar:mlstring>Anonymous</xar:mlstring>
+                </xar:if>
+            </xar:if> 
+            <xar:if condition="$adddate=='on'">
+              <!-- DATE -->  
+              <xar:mlstring>on</xar:mlstring>&nbsp;#xarLocaleFormatDate("%B %d, %Y %I:%M %p",$comment['xar_date'])#
+            </xar:if>
+          </span>
+        </li>
+      </xar:foreach>
+    </ul>
+  </xar:foreach>
+  <xar:if condition="$addprevious=='on'">
+      <p><a href="#$olderurl#">
+      <xar:mlstring>Older comments</xar:mlstring>
+      </a>
+      </p>
+  </xar:if>
+<xar:else />
+  <xar:mlstring>There are no comments</xar:mlstring>
+</xar:if>
+      

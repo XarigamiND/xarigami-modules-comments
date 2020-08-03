@@ -1,0 +1,137 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<div class="xar-mod-page">
+    <div class="xar-mod-head">
+        <xar:if condition="!xarRequestIsAJAX()">
+            <xar:template type="module" module="base" file="admin-menu" />
+        </xar:if>
+    </div>
+    <div class="xar-mod-body">
+        <h1> <xar:mlstring>Modify configuration</xar:mlstring></h1>
+        <div class="xar-mod-content">
+            <form method="post" action="#xarModURL('comments','admin','updateconfig')#" enctype="application/x-www-form-urlencoded">
+                <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
+                    <fieldset>
+                     <legend>
+                        <xar:mlstring>
+                           Global Options
+                        </xar:mlstring>
+                    </legend>
+
+                    <div class="xar-form-input-wrapper">
+                    <label class="xar-form-label" for="notifyfrommail" title="#xarML('Email for notification from field')#">
+                         <xar:mlstring>Notification email (from)</xar:mlstring>
+                    </label>
+                    <xar:data-input type="textbox" name="notifyfromemail" id="notifyfromemail" value="$notifyfromemail" class="xar-form-textmedium "/>
+                    </div>
+
+                    <div class="xar-form-input-wrapper">
+                    <label class="xar-form-label" for="notifyfromname" title="#xarML('Name for notification from field')#">
+                                <xar:mlstring>Notification name (from)</xar:mlstring>
+                    </label>
+                    <xar:data-input type="textbox" name="notifyfromname" id="notifyfromname" value="$notifyfromname" class="xar-form-textmedium "/>
+                    </div>
+
+                   <div class="xar-form-input-wrapper">
+                        <label for="rssnumitems" class="xar-form-label" title="#xarML('Number of items in RSS Feed')#">
+                            <xar:mlstring>
+                                 Number of Items in RSS Feed
+                            </xar:mlstring>
+                        </label>
+                        <xar:set name="rssnumitems">xarModGetVar('comments','rssnumitems')</xar:set>
+                        <xar:data-input type="integerbox" name="rssnumitems" id="rssnumitems" size="4" maxlength="4" value="$rssnumitems" />
+                    </div>
+                    <div class="xar-form-input-wrapper">
+                        <label for="numstats" class="xar-form-label"  title="#xarML('Statistics page ordering.')#">
+                                <xar:mlstring>Number of Items per page in Review and Statistics</xar:mlstring>
+                        </label>
+                        <xar:set name="numstats">xarModGetVar('comments','numstats')</xar:set>
+                        <xar:data-input type="textbox" name="numstats" id="numstats" size="4" maxlength="4" value="$numstats" />
+                    </div>
+
+                    <div class="xar-form-input-wrapper-after">
+                        <xar:set name="showtitle">xarModGetVar('comments','showtitle')</xar:set>
+                        <xar:data-input type="checkbox" name="showtitle" id="showtitle" checked="$showtitle" />
+                        <label for="showtitle" title="#xarML('Show the titles of items that the comments are attached to.')#">
+                                <xar:mlstring>
+                                    Show Title in Statistics
+                                </xar:mlstring>
+                        </label>
+                    </div>
+                    <div class="xar-form-input-wrapper-after">
+                        <xar:data-input type="checkbox" name="usersetrendering" id="usersetrendering" checked="$usersetrendering" />
+                        <label for="usersetrendering" title="#xarML('Allow users to set their own comment rendering style in their account?')#">
+                                <xar:mlstring>
+                                    Allow users to set comment rendering style in their account?
+                                </xar:mlstring>
+                        </label>
+
+                    </div>
+
+                     <div class="xar-form-input-wrapper-after">
+                        <xar:data-input type="checkbox" name="dochildcount" id="dochildcount" checked="$dochildcount" />
+                        <label for="dochildcount" title="#xarML('Disable an expensive query if not required- improves performance')#">
+                                <xar:mlstring>
+                                    [On by default] Use childcounts in comments?
+                                </xar:mlstring>
+                        </label>
+                        <p><xar:mlstring>This is an expensive (in terms of performance) query. Turn off if not required.</xar:mlstring></p>
+
+                    </div>
+
+                    <div class="xar-form-input-wrapper">
+                        <label for="moderatewords" class="xar-form-label" title="#xarML('Hold for moderation if there are more than a set number of links?')#">
+                                <xar:mlstring>Hold post for moderation </xar:mlstring>
+                        </label>
+                        <label for="moderatelinks" title="#xarML('Hold for moderation if there are more than a set number of links?')#">
+                           <xar:mlstring>If there are </xar:mlstring>
+                        </label>
+                         <xar:data-input type="integerbox" name="moderatelinknum" id="moderatelinknum"  value="$moderatelinknum"/> &#160;
+                         <label for="moderatelinksnum"><xar:mlstring>or more links in the post?</xar:mlstring></label>
+                          <xar:data-input type="checkbox" name="moderatelinks" id="moderatelinks" checked="$moderatelinks" />
+
+                        <p class="xar-form-input-wrapper-after"><xar:mlstring>If any of the following words or IP are associated with the post. Separate by semicolons (;).</xar:mlstring></p>
+                        <xar:data-input type="textarea_medium" name="moderatewords" id="moderatewords" value="$moderatewords" />
+                    </div>
+                    <div class="xar-form-input-wrapper">
+                        <label for="blacklistwords" class="xar-form-label" title="#xarML('Hold for moderation if there are more than a set number of links?')#">
+                                <xar:mlstring>Mark post as spam </xar:mlstring>
+                        </label>
+                        <xar:mlstring>If any of the following words or IP are associated with the post. Separate by semicolons (;)</xar:mlstring>
+                        <xar:data-input type="textarea_medium" name="blacklistwords" id="blacklistwords" value="$blacklistwords" />
+
+                    </div>
+
+                    <div class="xar-form-input-wrapper">
+                     <label class="xar-form-label" title="#xarML('Will require you to set the comment config for every module/itemtype hooked in that module itemtype.')#">
+                                <xar:mlstring>Module/Itemtype Override</xar:mlstring>
+                        </label>
+                        <xar:set name="allowhookoverride">xarModGetVar('comments','allowhookoverride')</xar:set>
+                        <xar:data-input type="checkbox" name="allowhookoverride" id="allowhookoverride"  checked="$allowhookoverride" />
+                        <label for="allowhookoverride" title="#xarML('Allow hooked modules to override default settings')#">
+                                <xar:mlstring>
+                                    Allow hooked modules to override default settings for itemtypes
+                                </xar:mlstring>
+                        </label>
+                        <p class="xar-form-container-after xar-sub">[<xar:mlstring>Caution: Check every module itemtype configuration for comment config if you change this.</xar:mlstring>]</p>
+                    </div>
+
+                </fieldset>
+                <xar:if condition="!empty($hooks)">
+                    <fieldset>
+                     <legend><xar:mlstring>Hook settings for comments</xar:mlstring></legend>
+                    <xar:foreach in="$hooks" key="$module" value="$output">
+                        #$output#
+                    </xar:foreach>
+                    </fieldset>
+                </xar:if>
+                <fieldset>
+                    <legend><xar:mlstring>Options per Module Itemtypes</xar:mlstring></legend>
+                    <xar:template file="modifyconfig_common" />
+                </fieldset>
+                <div class="xar-form-footer">
+                    <input type="submit" value="#xarML('Submit')#" />
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

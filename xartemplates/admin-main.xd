@@ -1,0 +1,77 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<div class="xar-mod-page">
+    <div class="xar-mod-head">
+        <xar:if condition="!xarRequestIsAJAX()">
+            <xar:template type="module" module="base" file="admin-menu" />
+        </xar:if>
+    </div>
+    <div class="xar-mod-body">
+        <h1> <xar:mlstring>Overview</xar:mlstring></h1>
+        <div class="xar-mod-content">
+           <img src="#xarTplGetImage('admin.png', 'comments')#" alt="official icon" width="96" height="96" class="xar-module-icon" />
+             <h2>
+                    <xar:mlstring>What is it?</xar:mlstring>
+            </h2>
+            <p><em><xar:mlstring>Comments is a Xaraya Utility Module.</xar:mlstring></em>
+                <xar:mlstring>Xarigami Comments enables you to post comments on any module item when hooked to a module or module itemtype.</xar:mlstring>
+            </p>
+            <h3>
+                <xar:mlstring>How to use it?</xar:mlstring>
+            </h3>
+            <p><a href="#xarModURL('modules','admin','hooks',array('hook'=>'comments'))#"><xar:mlstring>Enable the comments hook</xar:mlstring></a><xar:mlstring> to any content module, and on the display pages, comments will be available.</xar:mlstring>
+            </p>
+            <h3>
+                <xar:mlstring>Xarigami Comment Features</xar:mlstring>
+            </h3>
+            <p> <xar:mlstring>The Xarigami Comment module provides a number of key features:</xar:mlstring></p>
+                <ul>
+                    <li><xar:mlstring>Easy configuration for anonymous user posting, or registered user posting,</xar:mlstring></li>
+                    <li><xar:mlstring>Configurations per module and itemtype allowing you to configure options per module or itemtype if required.</xar:mlstring></li>
+                    <li><xar:mlstring>User subscription notification for topic or reply posting manageable from a user's account,</xar:mlstring></li>
+                    <li><xar:mlstring>Comment moderation with an included comment moderation dashboard page allowing Admins to approve, mark as spam, disapprove, or delete comments.</xar:mlstring></li>
+                    <li><xar:mlstring>Inbuilt spam controls that can be selectively chosen including blacklist words, and IP addresses, required moderator approvals, maximum links per post before marking as spam, approved comment required before additional comments are auto approved, and more.</xar:mlstring></li>
+                    <li><xar:mlstring>Hook support for akismet, bbcode, code highlighting, captcha, html, dynamicdata and other Xaraya hook utility modules.</xar:mlstring></li>
+                    <li><xar:mlstring>Improved security with per module or item thread permissions that apply to both comments and RSS feeds. No backdoor peeking via RSS!</xar:mlstring></li>
+                    <li><xar:mlstring>Secure forms for anonymous posting to ward against unwanted bots and other security vulterabilities</xar:mlstring></li>
+                    <li><xar:mlstring>Click-to-post option so that pages remain cacheable with authid protection of forms</xar:mlstring></li>
+                    <li><xar:mlstring>Improved performance with reworked code across many functions</xar:mlstring></li>
+                    <li><xar:mlstring>Thread locking</xar:mlstring></li>
+                    <li><xar:mlstring>Support for avatars, and other community features</xar:mlstring></li>
+                </ul>
+             <h3>
+                <xar:mlstring>Included Blocks</xar:mlstring>
+            </h3>
+            <p>
+                <xar:mlstring>The Latest Comment block provides a listing of the most
+                recent comments made on your site. The number of comments, date of
+                comment, comments from which modules, comment author and other configuration
+                variables can be set.</xar:mlstring>
+            </p>
+            <h3>
+                    <xar:mlstring>Included Hooks</xar:mlstring>
+            </h3>
+                <ul>
+                    <li><xar:mlstring>A display hook for modules that display existing comments on an item, and input for a comment.</xar:mlstring></li>
+                    <li><xar:mlstring>A modifyconfig hook that allows you to override the configuration settings per module itemtype.</xar:mlstring></li>
+                    <li><xar:mlstring>A usermenu hook that allows users to set their comment settings in their account, and manage their comment subscriptions.</xar:mlstring></li>
+
+                </ul>
+            <h3>
+                <xar:mlstring>Further Information</xar:mlstring>
+            </h3>
+            <p>
+                <xar:mlstring>Further information on the Xarigami Comments module can be found at</xar:mlstring>
+            </p>
+            <ul>
+                <li><xar:mlstring>the project development site with support documentation at </xar:mlstring><a href="http://xarigami.com/project/xarigami_comments?page=resources">Xarigami Comment Resources</a>
+                </li>
+                <li><xar:mlstring>Xarigami Comments project page at</xar:mlstring> <a title="#xarML('Xarigami Comments Module')#" href="http://http://xarigami.com/project/xarigami_comments">Xarigami Comments Project</a>.
+                  <xar:mlstring>The latest release is available from the Project Page, as well as resources, news related to the module and discussion links. Please post any bugs or feature requests in the related</xar:mlstring> <a href="http://xarigami.com/contrails/displayproject/xcom">Issue Tracker</a>
+                </li>
+            </ul>
+            <p class="xar-sub">
+                <strong>&#160;<xar:mlstring>Xarigami Comments Module Overview</xar:mlstring></strong>&#160;<xar:mlstring>Version</xar:mlstring> 1.0.3&#160;; 2009-08-21
+            </p>
+        </div>
+    </div>
+</div>

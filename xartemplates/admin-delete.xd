@@ -1,0 +1,47 @@
+<div class="xar-mod-page">
+    <div class="xar-mod-head">
+        <xar:if condition="!xarRequestIsAJAX()">
+            <xar:template type="module" module="base" file="admin-menu" />
+        </xar:if>
+    </div>
+    <div class="xar-mod-body">
+        <h1><xar:mlstring>Delete comments</xar:mlstring></h1>
+        <div class="xar-mod-content">
+            <form method="post" action="#$delete_url#">
+            <fieldset>
+                <legend><xar:mlstring>Delete Confirmation</xar:mlstring></legend>
+
+                    <div class="xar-form-input-wrapper">
+                        <label for="choice" title="#xarML('Delete all comments for this module?')#">
+                            <xar:mlstring>
+                                Are you sure you want to delete <strong>all</strong> comments associated with
+                            </xar:mlstring>
+                            <xar:if condition="$dtype ne 'all'">
+                                <strong>#$modname#</strong>
+                            <xar:else />
+                               <strong><xar:mlstring>all modules</xar:mlstring></strong>
+                            </xar:if>
+                            <xar:if condition="$dtype eq 'object'">
+                            <xar:mlstring>page id</xar:mlstring>
+                            [<strong>#$objectid#</strong>]?
+                            <xar:else />
+                             ?
+                            </xar:if>
+                        </label>
+                            <strong><xar:mlstring>Yes</xar:mlstring></strong>
+                                <input type="radio" name="choice" id="yes" value="yes" />
+                            <strong><xar:mlstring>No</xar:mlstring></strong>
+                                <input type="radio" name="choice" id="no" value="no" checked="checked" />
+                    </div>
+                 </fieldset>
+
+                <div class="xar-form-footer">
+                <input type="hidden" name="authid" value="#$authid#"/>
+                <input type="submit" name="submitted" id="submitted" value="submit" />
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
+

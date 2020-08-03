@@ -1,0 +1,60 @@
+Version 1.6.2 jo@2skies.com 2012-04-07
+-------------------------------------'
+- add 'Hold All Anon Posts for Moderation' option , mod var and associated code
+= add internal anchor at start of comment list that can be referenced from articles etc
+- simplify the flat view of comments
+- utilising new Roles default avatar for anonymous users and users without avatars (if avatars switched on)
+- Bug fixes including:
+    - unidentified index in managenotifies.php
+    - Remove pass by reference errors
+    - fix status message on queued comments (held for moderation)
+
+Version 1.6.1 jo@2skies.com 2011-11-13
+-------------------------------------
+Minor updated - added back comment number DD property used by some modules. Previously ccidentally removed.
+
+Version 1.5.1 jo@2skies.com 2009-10-29
+-------------------------------------'
+- add ability to select modules for review by module
+- some tidy of templates, feedback messages to submitted when comment hold is in place
+
+Version 1.5.0 jo@2skies.com 2008-09-X
+-----------------------
+- Support for full anonymous email posting with name, email (and optionally web)
+- clean up templates especially inluded input box and view templates
+- feedback to user when moderated comments are held
+- various bug fixes
+- This version requires a major database update for one table column.
+  Please test the upgrade first.
+
+Version 1.4.0 jo@2skies.com 2008-09-13
+-----------------------
+Thread locking options per itemtype
+Finalization of avatar use
+
+
+Version 1.3.6 jo@2skies.com 2008-08-30
+-----------------------
+- add comment moderation, approve/unaprove
+- add spam control and mark as spam, mark as non-spam
+- integrate akismet - required some 'standardization' changes for hooks
+- add additional spam control methods
+- add user avatars
+
+Version 1.3.5 jo@2skies.com 2007-11-27
+-----------------------
+- Add user email notification for thread or reply
+- Updated masks in templates so anon users can post if allowed
+- Formcaptcha option added, to comments system code for anon posting
+- Permission checks for RSS feeds and objects (eg thread per article)
+- Latest comment block updated to Xaraya 1.0 standard with override templates
+- Upstream features such as edit time out and itemtype hook overrides
+
+Version 1.3.1 jo@2skies.com 2007-07-20
+---------------------------
+- Anonomous can post, posting dependent on privileges [Comments-Post]
+- Brought upto date with centralized security in Xarigami, removal of block instances.
+- Performance and render options
+- Fix comment preview
+- Updated install to call upgrade from version 1.3.0
+

@@ -1,0 +1,170 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<xar:comment> lets link module related stylesheet to theme - have to do it via xar:set atm, cuz it returns 1 [andyv] </xar:comment>
+<xar:style scope="module" module="comments" file="comments" />
+
+<xar:base-include-javascript module="base" filename="formcheck.js" position="head" />
+<script type="text/javascript">
+<!--
+    var fieldRequired = Array("package[title]", "package[text]");
+    var fieldDescription = Array("Subject", "Comment");
+//-->
+</script>
+
+<xar:set name="$number_of_comments">count($package['comments'])</xar:set>
+
+<xar:comment>
+    [andyv] i see that we have at least 3 possible situations here,
+    so we should deal with them in a context-sensitive manner as follows:
+
+    1. no real comments posted
+        - display 'No Comments' note
+        - hide sorting options box
+        - display 'Post New Comment' box
+
+    2. at least 1 comment exists and needs to be displayed
+        - display sorting options box (for now.. perhaps needs be simpler for a single comment?)
+        - display 'Post New Comment' box
+
+    3. comments exist - user has selected 'No Comments' in 'Style' options
+        - display 'Comments Disabled' + count of total comments
+        - hide sorting options box
+        - hide 'Post New Comment' box
+        TODO: shouldn't this option be 'sticky' from user POV?
+        If yes, a user needs a way back to display comments again.
+
+</xar:comment>
+<div class="commentlist">
+<a id="readcomments"></a>
+<xar:if condition="$package['settings']['approvalrequired']
+   or (isset($package['settings']['approvalprevious']) and !empty($package['settings']['approvalprevious']))
+   or (isset($package['settings']['approvalifinfo']) and !empty($package['settings']['approvalifinfo']))
+   or (!empty($header['lockurl'])) ">
+    <div class="xar-align-left">
+        <xar:mlstring>Posts are moderated and may be held for approval before publishing.</xar:mlstring>
+       <xar:if condition="!empty($header['lockurl_image'])">
+        &#160;<a href="#$header['lockurl']#" title="#$header['lockurl_text']#" ><img src="#xarTplGetImage($header['lockurl_image'],'comments')#" title="#$header['lockurl_text']#" alt="#$header['lockurl_text']#"/> #$header['lockurl_text']#</a>
+        </xar:if>
+    </div>
+</xar:if>
+
+<xar:sec mask="Comments-Read" catch="false">
+    <xar:if condition="$package['settings']['usecommentnotify'] and xarUserIsLoggedIn() and $header['nodestatus'] ne _COM_STATUS_NODE_LOCKED">
+            <p><xar:if condition="$package['isnotified'] eq 1">
+               <a href="#$package['removenotify']#">Cancel my notifications</a> of new comments on this item.
+             <xar:else />
+              <a href="#$package['notifyme']#">Notify me</a> when a new comment is posted on this item.
+            </xar:if>
+            </p>
+    </xar:if>
+    <xar:if condition="$package['settings']['render'] ne 'nocomments'">
+        <xar:comment>
+            If pubsub is hooked to comments, allow subscribing here to be informed of new comments
+        </xar:comment>
+        <xar:comment>
+            <xar:if condition="xarModIsAvailable('pubsub') and xarModIsHooked('pubsub','comments')">
+                <xar:set name="extrainfo">array('module' => 'comments', 'cid' => 0, 'extra' => $header['modid'].'-'.$header['itemtype'].'-'.$header['objectid'])</xar:set>
+                <xar:module main="false" module="pubsub" func="displayicon" extrainfo="$extrainfo" layout="text" />
+            </xar:if>
+        </xar:comment>
+        <xar:if condition="$header['nodestatus'] ne _COM_STATUS_NODE_LOCKED and $number_of_comments eq 0 and $package['settings']['render'] ne 'nocomments'">
+            <p>
+                <xar:mlstring>There are no comments attached to this item, be the first to post.</xar:mlstring>
+            </p>
+            <xar:if condition="!empty($package['moderated'])">
+             <h3 class="xar-message-status xar-statusbar">#$package['moderated']#</h3>
+            </xar:if>
+            <xar:if condition="!isset($header['selected_cid'])">
+                <xar:if condition="$package['settings']['quickpost'] eq 1">
+                    <xar:if condition="xarSecurityCheck('CommentThreadPost',0,'Thread',$header['modid'].':'.$header['itemtype'].':'.$header['objectid'])">
+                        <xar:base-include-javascript filename="xmlhttprequest.js" module="base" position="body"/>
+                        <xar:set name="doposturl">xarModURL('comments','user','display',array('quickpost'=>1,'modid'=>$header['modid'],'itemtype'=>$header['itemtype'],'objectid'=>$header['objectid']))</xar:set>
+                        <xar:set name="onclick">"return loadContent(this.href,'commentload2');"</xar:set>
+
+                        <div class="quickpost">
+                            <h3>
+                                <a href="#$doposturl#" onclick="#$onclick#"><xar:mlstring>Post the first comment</xar:mlstring></a>
+                            </h3>
+                            <div id="commentformload2" class="commentbody">
+                                <div id="commentload2">
+                                </div>
+                            </div>
+                        </div>
+                    </xar:if>
+                <xar:else />
+
+                    <h3>#$header['input-title']#</h3>
+
+                    <xar:template file="input-box" type="module" />
+                </xar:if>
+
+            <xar:elseif condition="!empty($header['objectlink']) and !empty($header['objecttitle'])"/>
+                <p>
+                    <xar:mlstring>Return to</xar:mlstring>
+                    <a href="#$header['objectlink']#">#$header['objecttitle']#</a>
+                </p>
+            </xar:if>
+        <xar:else/>
+            <xar:if condition="$package['settings']['render'] ne 'nocomments'">
+                <xar:if condition="!empty($package['comments'])">
+                    <xar:if condition="!isset($header['selected_cid'])">
+                        <xar:template file="option_bar" type="module" />
+                   </xar:if>
+
+                    <xar:if condition="$package['settings']['render'] eq 'nested'">
+                        <xar:template file="view-nested" type="module" />
+                    <xar:elseif condition="$package['settings']['render'] eq 'threaded'" />
+                        <xar:template file="view-threaded" type="module" />
+                    <xar:elseif condition="$package['settings']['render'] eq 'flat'" />
+                        <xar:template file="view-flat" type="module" />
+                    </xar:if>
+                </xar:if>
+                <xar:if condition="!empty($package['moderated'])">
+                <h3  class="xar-message-status xar-statusbar">#$package['moderated']#</h3>
+                </xar:if>
+                <xar:if condition="$header['nodestatus'] eq _COM_STATUS_NODE_LOCKED">
+                     <h3>#$header['input-title']#</h3>
+                </xar:if>
+                <xar:if condition="!isset($header['selected_cid']) and $header['nodestatus'] ne _COM_STATUS_NODE_LOCKED">
+                    <xar:if condition="$package['settings']['quickpost']">
+                        <xar:if condition="xarSecurityCheck('CommentThreadPost',0,'Thread',$header['modid'].':'.$header['itemtype'].':'.$header['objectid'])">
+                            <xar:base-include-javascript filename="xmlhttprequest.js" module="base" position="body"/>
+                            <xar:set name="doposturl">xarModURL('comments','user','display',array('quickpost'=>1,'modid'=>$header['modid'],'itemtype'=>$header['itemtype'],'objectid'=>$header['objectid']))</xar:set>
+                            <xar:set name="onclick">"return loadContent(this.href,'commentload');"</xar:set>
+                            <div class="quickpost">
+                                <h3><a href="#$doposturl#" onclick="#$onclick#">#$header['input-title']#</a></h3>
+                                <div id="commentformload" class="commentbody">
+                                    <div id="commentload">
+                                    </div>
+                                </div>
+                            </div>
+                        </xar:if>
+                    <xar:else />
+                        <xar:if condition="xarSecurityCheck('CommentThreadPost',0,'Thread',$header['modid'].':'.$header['itemtype'].':'.$header['objectid'])">
+                            <h3>#$header['input-title']#</h3>
+                           <xar:template file="input-box" type="module" />
+                        </xar:if>
+                    </xar:if>
+                <xar:elseif condition="!empty($header['objectlink']) and !empty($header['objecttitle'])"/>
+                    <p>
+                        <xar:mlstring>Return to</xar:mlstring>
+                        <a href="#$header['objectlink']#">#$header['objecttitle']#</a>
+                    </p>
+                </xar:if>
+            </xar:if>
+        </xar:if>
+    <xar:comment>
+        jojo - I'm commenting this out, as when comments are turned off it usually means we don't want them
+        or any information related to them - eg in roles account display. Uncomment this if your need is otherwise.
+        <xar:else />
+            <p>
+                <xar:mlstring>Comments display and submission are currently turned off.</xar:mlstring>
+                <xar:if condition="$number_of_comments ne 0">
+                    <xar:mlstring>Total number of attached comments:</xar:mlstring> #$number_of_comments#
+                <xar:else />
+                    <xar:mlstring>There are no comments attached to this item.</xar:mlstring>
+                </xar:if>
+            </p>
+    </xar:comment>
+    </xar:if>
+</xar:sec>
+</div>

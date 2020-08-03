@@ -1,0 +1,23 @@
+<xar:base-include-javascript libname="jquery" libfile="jquery.min" plugin="ui" pluginfile="ui.core.min,ui.dialog.min,ui.dragdropsort.min" style="ui.css" position="body"/>
+<xar:comment>Include the js code for the tree view and related plugin</xar:comment>
+<xar:template type="module" module="modules" file="jq-hooks" />
+<div class="xar-mod-page">
+    <div class="xar-mod-head">
+         <xar:if condition="!xarRequestIsAJAX()">
+            <xar:template type="module" module="base" file="admin-menu" />
+        </xar:if>
+    </div>
+    <div class="xar-mod-body">
+        <h1>
+             <xar:mlstring> Configure Comment Hooks</xar:mlstring>
+        </h1>
+        <div class="xar-mod-content">
+            <xar:set name="url">#xarModURL('comments','admin','hooks')#</xar:set>
+            <xar:module main="false" module="modules" type="admin" func="hooks" curhook="comments" return_url="$url"/>
+              <p>
+            Note: not all modules fully support comments via their own templates. Some modules such as Articles are preconfigured for hooks.
+            Other modules may support some aspects of Comments or require addition of extra code to functions or templates. Please see individual module Overviews for details.
+            </p>
+        </div>
+    </div>
+</div>

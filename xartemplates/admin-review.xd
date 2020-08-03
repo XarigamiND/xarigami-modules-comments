@@ -1,0 +1,193 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<xar:base-include-javascript module="base" filename="checkallgroup.js" />
+<xar:base-include-javascript module="base" filename="toggle.js" />
+<xar:set name="thisurl">xarServerGetCurrentURL()</xar:set>
+<div class="xar-mod-page">
+    <div class="xar-mod-head">
+        <xar:if condition="!xarRequestIsAJAX()">
+            <xar:template type="module" module="base" file="admin-menu" />
+        </xar:if>
+    </div>
+    <div class="xar-mod-body">
+        <h1 class="xar-floatleft">
+        <xar:mlstring>Review and moderate comments:</xar:mlstring>
+        <xar:if condition="isset($modname) and !empty($modname)">
+            <xar:set name="umodname">ucfirst($modname);</xar:set>
+        </xar:if>
+         #$umodname#
+        </h1>
+        <div class="xar-align-right">
+            <form method="post" id="modchoice" name="modchoice" action="#xarModURL('comments','admin','review')#">
+                 <xar:data-input type="dropdown" name="modid" id="modid" validation="$modlist" value="$modid" onchange="modchoice.submit();"/>
+                 <xar:data-input type="textbox" hidden="hidden" name="return_url" value="$thisurl" />
+                 <input type="submit" value="#xarML('Select Module')#" />
+            </form>
+        </div>
+        <div class="xar-mod-content">
+            <xar:template type="module" file="admin-comments" />
+            <div class="xar-align-right">
+                <form  action="#xarModURL('comments','admin','review')#" method="post" >
+                    <input type="text" name="searchterm" value="#$searchterm#"/>
+                    <input type="submit" value="#xarML('Search Comments')#"/>
+                    <input type="hidden" name="status" value="#$searchstatus#"/>
+                    <input type="hidden" name="page" value="#$page#"/>
+                    <label for="maxfind"><xar:mlstring>Return </xar:mlstring></label>
+                    <input type="text" name="maxfind" class="xar-align-right xar-form-textshort" value="#$maxfind#"/>
+                </form>
+            </div>
+
+            <form id="comment-review" action="#xarModURL('comments','admin','review')#" method="post">
+                <div class="xar-form-input-wrapper xar-align-right xar-padding-thick">
+                    <label for="showdetail" title="#xarML('Click to toggle comment detail for all comments on this page')#"><xar:mlstring>Show all comment detail</xar:mlstring></label>
+                    <xar:data-input type="checkbox" name="showdetail" id="showdetail" checked="$showdetail" onchange="this.form.submit();" />
+
+                </div>
+
+                    <table class="xar-items">
+                        <tr>
+                            <th class="xar-valign-middle xar-align-left" width="5%">
+                               All&#160;<input type="checkbox" name="selectall" id="selectall"  onclick="xar_base_checkallgroup(document.forms['comment-review'],this,'checklist');return true;" />
+                            </th>
+                            <th class="xar-valign-middle xar-align-left" style="width:60%">
+                                <xar:if condition="!$searching">
+                                    <xar:mlstring>Comment</xar:mlstring>
+                                <xar:else />
+                                    <span class="xar-error"><xar:mlstring>COMMENT SEARCH RESULTS</xar:mlstring></span>
+                                </xar:if>
+                                <xar:if condition="!$showdetail">
+                                    <span class="xar-sub">
+                                        &#160;[<xar:mlstring>Click a title to toggle full text</xar:mlstring>]
+                                    </span>
+                                </xar:if>
+                            </th>
+                            <th class="xar-valign-middle xar-align-center" style="width:10%">
+                                <xar:mlstring>Date</xar:mlstring>
+                            </th>
+                            <th class="xar-valign-middle xar-align-center" style="width:10%">
+                                <xar:mlstring>Status</xar:mlstring>
+                            </th>
+                            <th class="xar-valign-middle xar-align-center" width="15%">
+                                <xar:mlstring><b>Action</b></xar:mlstring>
+                            </th>
+                        </tr>
+
+                        <xar:if condition="!isset($items) or empty($items) or count($items) eq '0'">
+                            <tr>
+                                <td colspan="5" align="center">
+                                    <br />
+                                    <xar:if condition="!$searching">
+                                    <xar:mlstring>
+                                        There are no comments for display.
+                                    </xar:mlstring>
+                                    <xar:else />
+                                    <xar:mlstring>
+                                        There are no comment search results for display.
+                                    </xar:mlstring>
+                                    </xar:if>
+                                    <br />
+                                    <br />
+                                </td>
+                            </tr>
+                        <xar:else />
+
+                            <xar:foreach in="$items" key="$commentid" value="$comment">
+                                <xar:if condition="(($commentid+1) % 2)">
+                                    <xar:set name="myclass">'xar-norm'</xar:set>
+                                <xar:else />
+                                    <xar:set name="myclass">'xar-accent'</xar:set>
+                                </xar:if>
+                                <tr>
+                                    <td style="width:5%;padding:5px;"  class="#$myclass#">
+
+                                         <xar:data-input type="checkbox" name="checklist['.$comment['xar_cid'].']" id="checklist['.$comment['xar_cid'].']" checked="" />
+                                    </td>
+
+                                    <td class="xar-valign-top xar-align-left #$myclass#" style="width:60%;margin-left:5px;padding:5px;">
+                                        <div href="javascript:void(0);" title="#xarML('Click to toggle comment full display on and off')#" onclick="return toggleDisplay('commentwrapper_#$comment['xar_cid']#');" >
+                                            <strong>#$comment['title']#</strong>
+                                        </div>
+                                        <xar:mlstring>Posted by:</xar:mlstring>
+                                        <xar:if condition="isset($comment['xar_uid']) and ($comment['xar_uid'] ne $isanon)">
+                                            <a href="#xarModURL('roles','user','display',array('uid'=>$comment['xar_uid']))#">#$comment['xar_author']#</a>
+                                        <xar:elseif condition="($comment['xar_uid'] eq $isanon) AND isset($comment['anoninfo']) AND !empty($comment['anoninfo'])" />
+                                          <xar:if condition="isset($comment['anoninfo']['aweb']) and str_replace('http://','',$comment['anoninfo']['aweb']) ne ''">
+                                                <a href="#$comment['anoninfo']['aweb']#">#$comment['anoninfo']['aname']#</a>
+                                            <xar:else />
+                                                #$comment['anoninfo']['aname']#
+                                            </xar:if>
+                                            <xar:set name="mailname">!empty($comment['anoninfo']['aemail']) ? 'Email <a href="mailto:'.$comment['anoninfo']['aemail'].'">'.$comment['anoninfo']['aemail'].'</a>' : 'No email'</xar:set>
+                                            (#$mailname#)
+                                        <xar:else />
+                                            #$comment['xar_author']#
+                                        </xar:if>
+
+                                        <xar:if condition="$showdetail">
+                                            <div>
+                                                <xar:if condition="isset($comment['transformed'][1])">
+                                                    #$comment['transformed'][1]#
+                                                <xar:else />
+                                                    #$comment['text']#
+                                                </xar:if>
+                                            </div>
+                                        <xar:else />
+                                             <div id="commentwrapper_#$comment['xar_cid']#" style="display:none;" class="xar-displaynone">
+                                                <xar:if condition="isset($comment['transformed'][1])">
+                                                    #$comment['transformed'][1]#
+                                                <xar:else />
+                                                    #$comment['text']#
+                                                </xar:if>
+                                            </div>
+                                        </xar:if>
+                                    </td>
+                                    <td class="xar-valign-top xar-align-left #$myclass#" style="width:10%;margin-left:5px;font-size:90%">
+                                            #xarLocaleGetFormattedDate('medium',$comment['xar_date'])#
+                                            #xarLocaleGetFormattedTime('medium',$comment['xar_date'])#
+                                    </td>
+                                    <td class="xar-valign-top xar-align-center #$myclass#" style="width:10%;font-size:90%">
+                                       <xar:set name="statusvalue">'-'</xar:set>
+                                        <xar:if condition="$comment['xar_status'] eq 1">
+                                            <xar:set name="statusvalue">'Unapproved'</xar:set>
+                                        <xar:elseif condition="$comment['xar_status'] eq 2"/>
+                                            <xar:set name="statusvalue">'Approved'</xar:set>
+                                        <xar:else condition="$comment['xar_status'] eq 4"/>
+                                             <xar:set name="statusvalue">'Spam'</xar:set>
+                                        </xar:if>
+
+                                        #$statusvalue#
+
+                                    </td>
+
+                                    <td class="xar-valign-top xar-align-center  #$myclass#" style="width:15%;font-size:90%">
+                                        <xar:if condition="$comment['xar_status'] eq 1">
+                                            <a href="#$comment['approve_url']#">#xarML('Approve')#</a>
+                                        <xar:elseif condition="$comment['xar_status'] eq 2" />
+                                            <a href="#$comment['unapprove_url']#">#xarML('Unapprove')#</a>
+                                        </xar:if>
+                                        <xar:if condition="$comment['xar_status'] ne 4">
+                                            |
+                                           <a href="#$comment['spam_url']#">#xarML('Spam')#</a>
+                                        <xar:else condition="$comment['xar_status'] eq 4"/>
+                                            <a href="#$comment['notspam_url']#">#xarML('Not Spam')#</a>
+                                        </xar:if>
+                                        |<a href="#$comment['delete_url']#">#xarML('Delete')#</a>
+                                        &#160;
+                                    </td>
+                                </tr>
+                            </xar:foreach>
+                        </xar:if>
+                    </table>
+
+
+                <div class="xar-form-footer">
+                    <xar:data-input type="dropdown" validation="$bulk" name="bulk" id="bulk" firstline="Choose action" />
+                    <input type="submit" value="#xarML('Confirm Action')#" />
+                    <xar:data-input type="textbox" hidden="hidden" name="return_url" value="$thisurl" />
+                    <xar:data-input type="textbox" hidden="hidden" name="page" value="$page" />
+
+                </div>
+                <div class="xar-align-center">#$pager#</div>
+            </form>
+        </div>
+    </div>
+</div>
+

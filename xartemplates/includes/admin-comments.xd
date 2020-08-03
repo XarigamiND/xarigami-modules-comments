@@ -1,0 +1,55 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<xar:style scope="module" module="base" file="tabs" />
+<xar:set name="request">xarRequestGetInfo()</xar:set>
+<xar:set name="activetab">#$request.2#</xar:set>
+<xar:set name="page">isset($page) ? $page :0</xar:set>
+<xar:set name="modid">isset($modid) ? $modid :0</xar:set>
+<xar:sec mask="Comments-Moderator" catch="false">
+<div class="xar-align-left xar-padding-thick">
+  <ul class="xar-tabs">
+    <li class="xar-tabs-label" title="#xarML('Choose an action to perform')#">
+      <xar:mlstring>View:</xar:mlstring>
+    </li>
+        <xar:if condition="($activetab eq 'review') and !isset($status) and ($page eq 0)">
+            <xar:set name="tabclass">'xar-tab-active'</xar:set>
+        <xar:else />
+            <xar:set name="tabclass">'xar-tab'</xar:set>
+        </xar:if>
+        <li class="#$tabclass#">
+          <a href="#xarModURL('comments','admin','review',array('modid'=>$modid))#">
+            <xar:mlstring>All comments</xar:mlstring>
+          </a>
+        </li>
+        <xar:if condition="($activetab eq 'review') and ($page eq 1)">
+            <xar:set name="tabclass">'xar-tab-active'</xar:set>
+        <xar:else />
+            <xar:set name="tabclass">'xar-tab'</xar:set>
+        </xar:if>
+        <li class="#$tabclass#">
+           <a href="#xarModURL('comments','admin','review',array('status'=>1,'page'=>1,'modid'=>$modid))#">
+            <xar:mlstring>Waiting for Moderation</xar:mlstring>
+          </a>
+        </li>
+         <xar:if condition="($activetab eq 'review') and ($page eq 2)">
+            <xar:set name="tabclass">'xar-tab-active'</xar:set>
+        <xar:else />
+            <xar:set name="tabclass">'xar-tab'</xar:set>
+        </xar:if>
+        <li class="#$tabclass#">
+         <a href="#xarModURL('comments','admin','review',array('status'=>2,'page'=>2,'modid'=>$modid))#">
+            <xar:mlstring>All Approved</xar:mlstring>
+          </a>
+        </li>
+        <xar:if condition="($activetab eq 'review') and ($page eq 3)">
+            <xar:set name="tabclass">'xar-tab-active'</xar:set>
+        <xar:else />
+            <xar:set name="tabclass">'xar-tab'</xar:set>
+        </xar:if>
+        <li class="#$tabclass#">
+            <a href="#xarModURL('comments','admin','review',array('status'=>4,'page'=>3,'modid'=>$modid))#">
+                <xar:mlstring>Marked as Spam</xar:mlstring>
+            </a>
+        </li>
+  </ul>
+</div>
+</xar:sec>

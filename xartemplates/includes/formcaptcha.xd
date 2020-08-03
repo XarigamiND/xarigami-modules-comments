@@ -1,0 +1,28 @@
+<xar:comment>Anti spam code - for anon users only</xar:comment>
+<xar:if condition="xarModIsAvailable('formcaptcha') and xarModGetVar('formcaptcha','usecaptcha') eq true and !xarUserIsLoggedIn()">
+    <div style="line-height:1em; margin:10px 0;" >
+        <xar:set name="dumdum">require('modules/formcaptcha/xaruser/anticonfig.php');</xar:set>
+        <xar:set name="cas_textcount">count($cas_text )</xar:set>
+        <label class="xar-form-label">#$cas_fieldTitle#</label>
+        <xar:set name="cas_antiselect">rand(1, $cas_textcount)</xar:set> <!-- 0 is for invalid, so don't select it-->
+        <div class="xar-form-container-after">
+            <div style="float:left;width:200px;">
+                <xar:set name="rndnum">rand( 1, 35565 )</xar:set>
+                <img class="antibot" src="#xarModURL('formcaptcha','user','antispam',
+                    array('antiselect'=>$cas_antiselect,'rnd'=>$rndnum))#" />
+            </div>
+            <div style="float:left;text-align:left;">
+                 <input type="text" name="antiword" id="antiword" size="30" maxlength="10"><br />
+                <xar:set name="imgurl">#xarModURL('formcaptcha','user','antispam',array('antiselect'=>$cas_antiselect,'rnd'=>$rndnum))#</xar:set>
+                Copy the word from the image on the left into the input box.
+                <xar:if condition="isset($package['casmsg'])">
+                    <br /><span class="xar-error" style="color:red">#$package['casmsg']#</span>
+                </xar:if>
+                <br />
+                <input type="hidden" name="antiselect" id="antiselect" value="#$cas_antiselect#" />
+                <input type="hidden" name="captchaon" id="captchaon" value="1" />
+            </div>
+        </div>
+    </div>
+</xar:if>
+<xar:comment>End Anti spam code</xar:comment> 
