@@ -10,7 +10,7 @@
 //-->
 </script>
 
-<xar:set name="$number_of_comments">count($package['comments'])</xar:set>
+<xar:set name="$number_of_comments">is_array($package['comments']) ? count($package['comments']) : 0</xar:set>
 
 <xar:comment>
     [andyv] i see that we have at least 3 possible situations here,

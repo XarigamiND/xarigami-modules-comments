@@ -362,7 +362,7 @@ function comments_user_display($args)
         $package['isnotified'] = 0;
     }
 
-   $package['numberofcomments'] = count($package['comments']);
+   $package['numberofcomments'] = is_array($package['comments']) ? count($package['comments']) : 0;
     /*  Generate a onetime authorisation code for this operation */
     $package['authid'] = xarSecGenAuthKey('comments');
     //$package['rssurl']=xarModURL('comments','user','rss',array('module_id'=>$header['modid'],'object_id'=>$header['objectid'],'itemtype'=>$header['itemtype']));
