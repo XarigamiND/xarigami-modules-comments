@@ -15,7 +15,7 @@
             </xar:if>
             <div class="#$actionpanel#">
                 <p>
-                    <xar:if condition="strtolower(xarUserGetVar('uname')) ne 'anonymous'">
+                    <xar:if condition="xarUserGetVar('uid') ne $package['isanon']">
                         <xar:mlstring>Name: </xar:mlstring>
                         <a href="&xar-modurl-roles-user-display;&amp;uid=#$package['uid']#"> #$package['name']# </a>
                         <xar:if condition="$receipt['action'] ne 'modify' and xarUserIsLoggedIn()">
