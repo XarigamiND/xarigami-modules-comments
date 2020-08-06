@@ -22,9 +22,7 @@ function comments_adminapi_delete_branch( $args )
     extract($args);
 
     if (empty($node)) {
-        $msg = xarML('Invalid or Missing Parameter \'node\'!!');
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
-        return;
+        throw new EmptyParameterException('node');
     }
 
     // Grab the deletion node's left and right values

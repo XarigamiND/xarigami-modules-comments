@@ -128,7 +128,12 @@ function comments_user_reply()
         break;
 
         case 'reply':
-          $comments = xarModAPIFunc('comments','user','get_one',
+            if(!array_key_exists('pid', $header) || !is_numeric($header['pid'])) {
+                $msg = xarML('Submitting a comment reply failed because the function was not invoked from a previous comment to reply to.');
+                return xarTplModule('base','user','errors',array('errortype' => 'caught','var1'=>$msg));
+            }
+
+            $comments = xarModAPIFunc('comments','user','get_one',
                                        array('cid' => $header['pid']));
 
 

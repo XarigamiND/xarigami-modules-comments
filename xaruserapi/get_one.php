@@ -26,11 +26,7 @@ function comments_userapi_get_one( $args )
         $cid = isset($itemid) ? $itemid :null;
     }
     if(!isset($cid) || empty($cid)) {
-        $msg = xarML('Missing or Invalid argument [#(1)] for #(2) function #(3) in module #(4)',
-                                 'cid','userapi','get_one','comments');
-        xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
-                        new SystemException(__FILE__.' ('.__LINE__.'):  '.$msg));
-        return false;
+        throw new EmptyParameterException('cid');
     }
 
     if(!isset($status) || !in_array($status,
