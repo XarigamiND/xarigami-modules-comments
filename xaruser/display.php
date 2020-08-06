@@ -295,6 +295,11 @@ function comments_user_display($args)
     //strip tags on title - this could come from another module, already prepped
     $package['new_title']             = strip_tags(xarVarGetCached('Comments.title', 'title'));
 
+    // Language strings for JS form validator
+    $package['formcheckmsg'] = xarML('Please complete the following fields:');
+    $package['titlelabel'] = xarML('Subject');
+    $package['textlabel'] = xarML('Comment');
+
     // Let's honour the phpdoc entry at the top :-)
     if(isset($args['returnurl'])) {
         $receipt['returnurl']['raw'] = $args['returnurl'];

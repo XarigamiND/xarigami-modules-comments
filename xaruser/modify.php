@@ -200,6 +200,11 @@ function comments_user_modify()
 
     }
 
+    // Language strings for JS form validator
+    $package['formcheckmsg'] = xarML('Please complete the following fields:');
+    $package['titlelabel'] = xarML('Subject');
+    $package['textlabel'] = xarML('Comment');
+
     $hooks = xarModAPIFunc('comments','user','formhooks');
 
 /*

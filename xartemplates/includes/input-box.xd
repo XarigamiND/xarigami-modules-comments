@@ -2,7 +2,7 @@
 <xar:set name="request">xarRequestGetInfo()</xar:set>
 <xar:set name="activetab">#$request.2#</xar:set>
 <xar:if condition="xarSecurityCheck('CommentThreadPost',0,'Thread',$header['modid'].':'.$header['itemtype'].':'.$header['objectid'])">
-    <form action="#$receipt['post_url']#" method="post" name="post" id="post" onSubmit="return xar_base_formCheck(this, fieldRequired, fieldDescription);">
+    <form action="#$receipt['post_url']#" method="post" name="post" id="post" onSubmit="return xar_base_formCheck(this, fieldRequired, fieldDescription, fieldMsg);">
         <div class="xar-ib-wrapper xar-accent-outline">
             <xar:comment>We need to adjust class to displays with and without the right column for form hooks eg bbcode, smilies</xar:comment>
             <xar:if condition="$hooks['formdisplay'] ne ''">

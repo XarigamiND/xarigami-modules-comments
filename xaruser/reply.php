@@ -290,6 +290,12 @@ function comments_user_reply()
             $package['comments']  = $comments;
 
     }
+
+    // Language strings for JS form validator
+    $package['formcheckmsg'] = xarML('Please complete the following fields:');
+    $package['titlelabel'] = xarML('Subject');
+    $package['textlabel'] = xarML('Comment');
+
     //formcaptcha
     $package['casmsg']= isset($casmsg)?$casmsg:'';
 

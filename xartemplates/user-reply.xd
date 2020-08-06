@@ -2,9 +2,12 @@
 
 <xar:base-include-javascript module="base" filename="formcheck.js" position="head" />
 <script type="text/javascript">
+var fieldTitle = '#xarVarPrepForJS($package['titlelabel'])#';
+var fieldText = '#xarVarPrepForJS($package['textlabel'])#';
+var fieldMsg = '#xarVarPrepForJS($package['formcheckmsg'])#';
 <!--
     var fieldRequired = Array("package[title]", "package[text]");
-    var fieldDescription = Array("Subject", "Comment");
+    var fieldDescription = Array(fieldTitle, fieldText);
 //-->
 </script>
 
