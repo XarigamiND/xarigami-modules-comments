@@ -59,15 +59,10 @@
             <h3>
                 <xar:mlstring>Further Information</xar:mlstring>
             </h3>
-            <p>
-                <xar:mlstring>Further information on the Xarigami Comments module can be found at</xar:mlstring>
-            </p>
             <ul>
-                <li><xar:mlstring>the project development site with support documentation at </xar:mlstring><a href="http://xarigami.com/project/xarigami_comments?page=resources">Xarigami Comment Resources</a>
-                </li>
-                <li><xar:mlstring>Xarigami Comments project page at</xar:mlstring> <a title="#xarML('Xarigami Comments Module')#" href="http://http://xarigami.com/project/xarigami_comments">Xarigami Comments Project</a>.
-                  <xar:mlstring>The latest release is available from the Project Page, as well as resources, news related to the module and discussion links. Please post any bugs or feature requests in the related</xar:mlstring> <a href="http://xarigami.com/contrails/displayproject/xcom">Issue Tracker</a>
-                </li>
+                <li><a href="http://xarigami.org/project/xarigami_comments"><xar:mlstring>Xarigami Comments project page</xar:mlstring></a></li>
+                <li><a href="http://xarigami.org/contrails/displayproject/xcom"><xar:mlstring>Xarigami Comments issue tracker</xar:mlstring></a></li>
+                <li><a href="http://xarigami.org/keywords/comments"><xar:mlstring>Comments related articles</xar:mlstring></a></li>
             </ul>
             <p class="xar-sub">
                 <strong>&#160;<xar:mlstring>Xarigami Comments Module Overview</xar:mlstring></strong>&#160;<xar:mlstring>Version</xar:mlstring> 1.0.3&#160;; 2009-08-21
