@@ -68,7 +68,7 @@ function comments_userapi_get_node_root( $args )
 
     $count=$result->RecordCount();
 
-    assert($count==1 | $count==0);
+    assert($count==1 || $count==0);
 
     if (!$result->EOF) {
         $node = $result->GetRowAssoc(false);
